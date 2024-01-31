@@ -17,13 +17,13 @@ const placeOrder = async(req,res)=>{
             updated_at: Date.now()
         });
         await order.save({session});
-        const paymentResponse = await axios.post('http://localhost:3010/api/makePayment', {
+        const paymentResponse = await axios.post('https://ayykori-task.onrender.com/api/makePayment', {
             user_id,
             amount: calculateTotal(items),
           });
     
           if (paymentResponse.data.success) {
-            const shippingResponse = await axios.post('http://localhost:3010/api/shipItems', { order });
+            const shippingResponse = await axios.post('https://ayykori-task.onrender.com/api/shipItems', { order });
     
             if (shippingResponse.data.success) {
               order.status = 'completed';
