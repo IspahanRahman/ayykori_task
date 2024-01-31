@@ -3,7 +3,7 @@ require("./config/database").connect();
 const express = require('express');
 const {rateLimit} = require('express-rate-limit');
 const handleTransaction = require('./middlewares/handleTransaction');
-const apiRoute = require('./routes/orderRoute');
+const apiRoute = require('./routes/allRoute');
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
@@ -26,13 +26,13 @@ const apiLimiter = rateLimit({
       },
 });
 
-// app.use(handleTransaction);
+app.use(handleTransaction);
 app.use(apiLimiter);
 
 app.use('/api', apiRoute);
 
 app.get('/',(req,res)=>{
-    res.send('Hello World');
+  res.send('Hello World');
 });
 
 const PORT = process.env.PORT || 3010;
